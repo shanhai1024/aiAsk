@@ -1,0 +1,11 @@
+# 配置文件 (必须忽略，防止 Key 泄露)
+.ask_config.json
+
+# 二进制文件
+ask
+ask.exe
+dist/
+
+# 依赖与日志
+vendor/
+*.log
