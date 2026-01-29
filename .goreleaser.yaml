@@ -6,7 +6,7 @@ before:
     - go mod tidy
 
 builds:
-  - main: cmd/ask/main.go  # 去掉 ./ 前缀，确保路径唯一性
+  - main: cmd/ask
     binary: ask
     env:
       - CGO_ENABLED=0
