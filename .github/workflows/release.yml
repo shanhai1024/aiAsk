@@ -1,13 +1,12 @@
-# .github/workflows/release.yml
-name: Release
+name: goreleaser
 
 on:
   push:
     tags:
-      - 'v*' # 当你推送以 v 开头的标签时触发
+      - 'v*' # 当推送以 v 开头的标签时触发
 
 permissions:
-  contents: write # 必须赋予写入权限以创建 Release
+  contents: write # 必须有写权限才能创建 Release
 
 jobs:
   goreleaser:
@@ -16,18 +15,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # 获取所有历史记录，以便生成 Changelog
+          fetch-depth: 0 # 必须拉取所有历史记录，否则版本号可能识别错误
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21' # 根据你的 go.mod 版本调整
+          go-version: '1.21' # 或者你的项目所用的版本
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6 #升级到 v6 以支持 version: 2
         with:
           distribution: goreleaser
-          version: latest
+          version: "~> v2" # 强制使用 v2 版本
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 自动调用的 GitHub 令牌
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 用于创建本仓库的 Release
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }} # 用于推送到 Tap 仓库
