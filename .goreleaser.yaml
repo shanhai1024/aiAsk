@@ -1,3 +1,4 @@
+# GoReleaser 配置文件 - 用于自动化发布和分发
 version: 2
 
 before:
@@ -10,7 +11,7 @@ builds:
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X main.Version={{.Version}} # 核心注入逻辑
+      - -s -w -X main.Version={{.Version}} # 动态注入版本号
     goos:
       - linux
       - windows
@@ -18,6 +19,23 @@ builds:
     goarch:
       - amd64
       - arm64
+
+# Homebrew 配置：会自动推送到你的 shanhai1024/homebrew-ask 仓库
+brews:
+  - name: ask
+    repository:
+      owner: shanhai1024
+      name: homebrew-ask
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+
+    directory: Formula
+    homepage: "https://github.com/shanhai1024/aiAsk"
+    description: "Your AI Terminal Expert | 你的 AI 终端指令专家"
+    license: "MIT"
+
+    # 安装脚本逻辑
+    install: |
+      bin.install "ask"
 
 archives:
   - format: tar.gz
@@ -29,15 +47,6 @@ archives:
 checksum:
   name_template: "checksums.txt"
 
-# 补充：如果有 Homebrew Tap，可以在这里配置
-# brews:
-#   - name: ask
-#     repository:
-#       owner: shanhai1024
-#       name: homebrew-tap
-#     install: |
-#       bin.install "ask"
-
 snapshot:
   name_template: "{{ incpatch .Version }}-next"
 
@@ -47,3 +56,4 @@ changelog:
     exclude:
       - "^docs:"
       - "^test:"
+      - "merge"
