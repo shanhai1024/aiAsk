@@ -36,7 +36,7 @@ brew install ask
 If you don't use Homebrew, use our installation script:
 
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh](https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh) | bash
+curl -fsSL https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh | bash
 ```
 
 ### 🚀 Quick Start
@@ -78,7 +78,7 @@ brew install ask
 如果你不使用 Homebrew，可以执行以下命令直接安装：
 
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh](https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh) | bash
+curl -fsSL https://raw.githubusercontent.com/shanhai1024/aiAsk/main/install.sh | bash
 ```
 
 ### 🚀 快速上手
