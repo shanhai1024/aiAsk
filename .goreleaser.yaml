@@ -1,4 +1,4 @@
-# GoReleaser 配置文件 - 用于自动化发布和分发
+# GoReleaser 配置文件 - 生产环境正式版
 version: 2
 
 before:
@@ -6,12 +6,12 @@ before:
     - go mod tidy
 
 builds:
-  - main: ./cmd/ask/main.go
+  - main: cmd/ask/main.go  # 去掉 ./ 前缀，确保路径唯一性
     binary: ask
     env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X main.Version={{.Version}} # 动态注入版本号
+      - -s -w -X main.Version={{.Version}} # 动态注入 Git Tag 作为版本号
     goos:
       - linux
       - windows
@@ -20,7 +20,7 @@ builds:
       - amd64
       - arm64
 
-# Homebrew 配置：会自动推送到你的 shanhai1024/homebrew-ask 仓库
+# Homebrew 分发配置
 brews:
   - name: ask
     repository:
@@ -33,7 +33,6 @@ brews:
     description: "Your AI Terminal Expert | 你的 AI 终端指令专家"
     license: "MIT"
 
-    # 安装脚本逻辑
     install: |
       bin.install "ask"
 
